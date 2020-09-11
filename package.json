@@ -17,13 +17,16 @@
     "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
     "lint": "eslint {src,test,config}/**/*.js",
     "sequelize": "cross-env NODE_PATH=. sequelize",
+    "sequelize:develop":"npm run sequelize db:migrate -- --env=development",
+    "sequelize:product":"npm run sequelize db:migrate -- --env=production",
+    "sequelize:seed":"npm run sequelize db:seed:all",
     "console": "cross-env NODE_PATH=. node src/interfaces/console/index.js",
     "heroku-postbuild": "NODE_ENV=production NODE_PATH=. sequelize db:migrate --url=$DATABASE_URL",
     "pm2": "pm2",
     "cleanup": "node scripts/cleanup.js"
   },
   "repository": {},
-  "author": "Talysson <talyssonoc@gmail.com>",
+  "author": "Tai.Tran <thanhtai.tttgalaxy@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "awilix": "^3.0.9",
