@@ -17,11 +17,12 @@
     "coverage": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --opts test/mocha.opts.unit",
     "lint": "eslint {src,test,config}/**/*.js",
     "sequelize": "cross-env NODE_PATH=. sequelize",
-    "sequelize:develop":"npm run sequelize db:migrate -- --env=development",
-    "sequelize:product":"npm run sequelize db:migrate -- --env=production",
-    "sequelize:seed":"npm run sequelize db:seed:all",
+    "sequelize:develop": "npm run sequelize db:migrate -- --env=development",
+    "sequelize:product": "npm run sequelize db:migrate -- --env=production",
+    "sequelize:seed": "npm run sequelize db:seed:all",
     "console": "cross-env NODE_PATH=. node src/interfaces/console/index.js",
     "heroku-postbuild": "NODE_ENV=production NODE_PATH=. sequelize db:migrate --url=$DATABASE_URL",
+    "wind:heroku-postbuild": "set NODE_ENV=production&& set NODE_PATH=.&& sequelize db:migrate --url=$DATABASE_URL",
     "pm2": "pm2",
     "cleanup": "node scripts/cleanup.js"
   },
@@ -49,7 +50,8 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^3.0.0",
     "structure": "^1.2.0",
-    "swagger-ui-express": "^2.0.14"
+    "swagger-ui-express": "^2.0.14",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
