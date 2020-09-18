@@ -1,0 +1,16 @@
+{
+    "production": {
+        "userName": "xwlmrkzbcrnoxp",
+        "password": "bd2ca6cf649338bb6c9f2cc482c1d5902785825bc1733682c61107515ce6e072",
+        "host": "ec2-50-19-231-222.compute-1.amazonaws.com",
+        "port": "5432",
+        "databaseName": "d970hatls108fr"
+    },
+    "development": {
+        "userName": "postgres",
+        "password": "AnhTai56",
+        "host": "localhost",
+        "port": "3056",
+        "databaseName": "shop"
+    }
+}
