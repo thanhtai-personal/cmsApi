@@ -9,23 +9,23 @@ const { requestMethod } = routeConstants
 var app = appSingleton.getInstance()
 
 module.exports = {
-produceRoute: (routeObj) => {
-  app.use(routeObj.rootPath, routeObj.routes);
-},
+  produceRoute: (routeObj) => {
+    app.use(routeObj.rootPath, routeObj.routes);
+  },
   generateMethod: (routesList) => {
     routesList.forEach((routeObj) => {
       switch (routeObj.method) {
         case requestMethod.get:
-          router.get(routeObj.path, routeObj.controller)
+          router.get(routeObj.path, routeObj.controllerFunction)
           break;
         case requestMethod.post:
-          router.post(routeObj.path, routeObj.controller)
+          router.post(routeObj.path, routeObj.controllerFunction)
           break;
         case requestMethod.put:
-          router.put(routeObj.path, routeObj.controller)
+          router.put(routeObj.path, routeObj.controllerFunction)
           break;
         case requestMethod.delete:
-          router.delete(routeObj.path, routeObj.controller)
+          router.delete(routeObj.path, routeObj.controllerFunction)
           break;
       }
     })

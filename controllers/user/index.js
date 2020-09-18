@@ -1,5 +1,20 @@
-module.exports = {
-  get: (req, res, next) => {
-    res.send('respond with a resource');
+const UserService = require('./../../services/user');
+const BaseController = require('../base');
+class UserController extends BaseController {
+  constructor () {
+    super(new UserService());
+    this.getByEmail = this.getByEmail.bind(this);
+  }
+
+  async getByEmail (req, res, next) {
+    const { data: { email = '' } } = req;
+    try {
+      const result = await this.service.getByEmail(email)
+      res.send(this.bindSuccessDataResponse(result));
+    } catch (error) {
+      next(error)
+    }
   }
 }
+
+module.exports = UserController
