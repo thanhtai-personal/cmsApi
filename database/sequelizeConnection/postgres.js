@@ -20,7 +20,12 @@ if (process.env.NODE_ENV === 'production') {
     // logging: msg => logger.debug(msg),     // Use custom logger (e.g. Winston or Bunyan), displays the first parameter
     // logging: logger.debug.bind(logger)     // Alternative way to use custom logger, displays all messages
 
-    
+    // pool: {
+    //   max: 5,
+    //   min: 0,
+    //   acquire: 30000,
+    //   idle: 10000
+    // }
   })
 }
 

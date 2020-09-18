@@ -1,6 +1,7 @@
-const sequelize = require('./sequelizeConnection')
+const sequelize = require('./sequelizeConnection/postgres')
 
 module.exports = {
+  postgresDb: sequelize,
   databaseConnect: async () => {
     try {
       await sequelize.authenticate();
