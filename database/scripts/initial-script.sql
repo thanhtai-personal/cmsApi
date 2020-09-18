@@ -70,7 +70,7 @@ CREATE TABLE "user" (
   "passwordHash" varchar(32) NOT NULL,
   "admin" smallint NOT NULL DEFAULT '0',
   "vendor" smallint NOT NULL DEFAULT '0',
-  "registeredAt" timestamp NOT NULL,
+  "createdAt" timestamp NOT NULL,
   "lastLogin" timestamp DEFAULT NULL,
   "intro" text,
   "profile" text,

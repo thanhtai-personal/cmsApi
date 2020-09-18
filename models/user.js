@@ -95,7 +95,7 @@ User.init({
   vendor: {
     type: DataTypes.SMALLINT
   },
-  registeredAt: {
+  createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   },
