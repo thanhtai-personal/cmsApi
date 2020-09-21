@@ -1,6 +1,6 @@
 const PermissionService = require('../../services/baseModelServices/permission.service');
-const BaseController = require('./../base.controller');
-class PermissionController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class PermissionController extends BaseModelController {
   constructor () {
     super(new PermissionService());
   }

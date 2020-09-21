@@ -1,6 +1,6 @@
 const ProductMetaService = require('../../services/baseModelServices/productMeta.service');
-const BaseController = require('./../base.controller');
-class ProductMetaController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class ProductMetaController extends BaseModelController {
   constructor () {
     super(new ProductMetaService());
   }

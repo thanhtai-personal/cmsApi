@@ -1,6 +1,6 @@
 const TagService = require('../../services/baseModelServices/tag.service');
-const BaseController = require('./../base.controller');
-class TagController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class TagController extends BaseModelController {
   constructor () {
     super(new TagService());
   }

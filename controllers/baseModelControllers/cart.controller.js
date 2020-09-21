@@ -1,6 +1,6 @@
 const CartService = require('../../services/baseModelServices/cart.service');
-const BaseController = require('./../base.controller');
-class CartController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class CartController extends BaseModelController {
   constructor () {
     super(new CartService());
   }

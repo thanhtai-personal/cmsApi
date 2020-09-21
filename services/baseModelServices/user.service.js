@@ -1,4 +1,4 @@
-const BaseService = require('./../base');
+const BaseService = require('./baseModel.service');
 const UserModel = require('./../../models/user');
 
 class UserService extends BaseService {

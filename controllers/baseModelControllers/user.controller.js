@@ -1,6 +1,6 @@
 const UserService = require('../../services/baseModelServices/user.service');
-const BaseController = require('./../base.controller');
-class UserController extends BaseController {
+const BaseModelController = require('./baseModel.controller');
+class UserController extends BaseModelController {
   constructor () {
     super(new UserService());
     this.getByEmail = this.getByEmail.bind(this);

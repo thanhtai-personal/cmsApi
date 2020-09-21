@@ -1,6 +1,6 @@
 const ProductReviewService = require('../../services/baseModelServices/productReview.service');
-const BaseController = require('./../base.controller');
-class ProductReviewController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class ProductReviewController extends BaseModelController {
   constructor () {
     super(new ProductReviewService());
   }

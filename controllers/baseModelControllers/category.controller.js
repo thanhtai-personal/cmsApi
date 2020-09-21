@@ -1,6 +1,6 @@
 const CategoryService = require('../../services/baseModelServices/category.service');
-const BaseController = require('./../base.controller');
-class CategoryController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class CategoryController extends BaseModelController {
   constructor () {
     super(new CategoryService());
   }

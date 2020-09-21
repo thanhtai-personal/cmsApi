@@ -1,6 +1,6 @@
 const RoleService = require('../../services/baseModelServices/role.service');
-const BaseController = require('./../base.controller');
-class RoleController extends BaseController {
+const BaseModelController = require('./../base.controller');
+class RoleController extends BaseModelController {
   constructor () {
     super(new RoleService());
   }
