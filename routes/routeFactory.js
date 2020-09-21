@@ -14,6 +14,10 @@ module.exports = {
   },
   generateMethod: (routesList) => {
     routesList.forEach((routeObj) => {
+      router.use(function timeLog (req, res, next) {
+        console.log('Time: ', Date.now())
+        next()
+      })
       switch (routeObj.method) {
         case requestMethod.get:
           router.get(routeObj.path, routeObj.controllerFunction);
