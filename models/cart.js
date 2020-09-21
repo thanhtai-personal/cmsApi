@@ -4,9 +4,9 @@ const { DataTypes, Model } = require('sequelize');
 const { postgresDb } = database
 const sequelize = postgresDb.getInstance();
 
-class Transaction extends Model {}
+class Cart extends Model {}
 
-Transaction.init({
+Cart.init({
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
@@ -14,22 +14,7 @@ Transaction.init({
     primaryKey: true
   },
   userId: {
-    type: DataTypes.UUID,
-  },
-  orderId: {
-    type: DataTypes.UUID,
-  },
-  code: {
-    type: DataTypes.STRING(100)
-  },
-  type: {
-    type: DataTypes.SMALLINT
-  },
-  mode: {
-    type: DataTypes.SMALLINT
-  },
-  status: {
-    type: DataTypes.SMALLINT
+    type: DataTypes.UUID
   },
   content: {
     type: DataTypes.TEXT
@@ -51,8 +36,8 @@ Transaction.init({
   }
 }, {
   sequelize,
-  modelName: 'Transaction',
-  tableName: 'transaction',
+  modelName: 'Cart',
+  tableName: 'cart',
   timestamps: true,
   updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
@@ -63,4 +48,4 @@ Transaction.init({
 //   // Code here
 // })();
 
-module.exports = Transaction
+module.exports = Cart

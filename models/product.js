@@ -4,9 +4,9 @@ const { DataTypes, Model } = require('sequelize');
 const { postgresDb } = database
 const sequelize = postgresDb.getInstance();
 
-class Transaction extends Model {}
+class Product extends Model {}
 
-Transaction.init({
+Product.init({
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
@@ -15,29 +15,61 @@ Transaction.init({
   },
   userId: {
     type: DataTypes.UUID,
+    allowNull: false
   },
-  orderId: {
-    type: DataTypes.UUID,
+  title: {
+    type: DataTypes.STRING(75),
+    allowNull: false
   },
-  code: {
+  metaTitle: {
     type: DataTypes.STRING(100)
   },
-  type: {
-    type: DataTypes.SMALLINT
+  slug: {
+    type: DataTypes.STRING(100),
+    allowNull: false
   },
-  mode: {
-    type: DataTypes.SMALLINT
-  },
-  status: {
-    type: DataTypes.SMALLINT
-  },
-  content: {
+  summary: {
     type: DataTypes.TEXT
+  },
+  type: {
+    type: DataTypes.SMALLINT,
+    allowNull: false,
+    defaultValue: 0
+  },
+  sku: {
+    type: DataTypes.STRING(100)
+  },
+  price: {
+    type: DataTypes.DOUBLE,
+    allowNull: false
+  },
+  discount: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+    defaultValue: 0
+  },
+  quantity: {
+    type: DataTypes.SMALLINT
+  },
+  shop: {
+    type: DataTypes.SMALLINT
+  },
+  publishedAt: {
+    type: DataTypes.DATE
+  },
+  startAt: {
+    type: DataTypes.DATE
+  },
+  endAt: {
+    type: DataTypes.DATE
   },
   isDelete: {
     type: DataTypes.SMALLINT,
     allowNull: false,
     defaultValue: 0
+  },
+  content: {
+    type: DataTypes.TEXT,
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -51,8 +83,8 @@ Transaction.init({
   }
 }, {
   sequelize,
-  modelName: 'Transaction',
-  tableName: 'transaction',
+  modelName: 'Product',
+  tableName: 'product',
   timestamps: true,
   updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
@@ -63,4 +95,4 @@ Transaction.init({
 //   // Code here
 // })();
 
-module.exports = Transaction
+module.exports = Product

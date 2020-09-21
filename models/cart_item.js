@@ -4,35 +4,46 @@ const { DataTypes, Model } = require('sequelize');
 const { postgresDb } = database
 const sequelize = postgresDb.getInstance();
 
-class Transaction extends Model {}
+class CartItem extends Model {}
 
-Transaction.init({
+CartItem.init({
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true
   },
-  userId: {
+  productId: {
     type: DataTypes.UUID,
+    allowNull: false
   },
-  orderId: {
+  cartId: {
     type: DataTypes.UUID,
+    allowNull: false
   },
-  code: {
-    type: DataTypes.STRING(100)
+  sku: {
+    type: DataTypes.STRING(100),
+    // allowNull: false
   },
-  type: {
-    type: DataTypes.SMALLINT
+  price: {
+    type: DataTypes.DOUBLE,
+    allowNull: false
   },
-  mode: {
-    type: DataTypes.SMALLINT
+  discount: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+    defaultValue: 0
   },
-  status: {
-    type: DataTypes.SMALLINT
+  quantity: {
+    type: DataTypes.SMALLINT,
+    allowNull: false
+  },
+  active: {
+    type: DataTypes.SMALLINT,
+    allowNull: false
   },
   content: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
   },
   isDelete: {
     type: DataTypes.SMALLINT,
@@ -51,8 +62,8 @@ Transaction.init({
   }
 }, {
   sequelize,
-  modelName: 'Transaction',
-  tableName: 'transaction',
+  modelName: 'CartItem',
+  tableName: 'cart_item',
   timestamps: true,
   updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
@@ -63,4 +74,4 @@ Transaction.init({
 //   // Code here
 // })();
 
-module.exports = Transaction
+module.exports = CartItem

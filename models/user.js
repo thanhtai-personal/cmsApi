@@ -82,6 +82,7 @@ User.init({
   },
   passwordHash: {
     type: DataTypes.STRING(32),
+    allowNull: false,
     is: /^[0-9a-f]{64}$/i,
     // set(value) {
     //   // Storing passwords in plaintext in the database is terrible.
@@ -90,14 +91,13 @@ User.init({
     // }
   },
   admin: {
-    type: DataTypes.SMALLINT
+    type: DataTypes.SMALLINT,
+    allowNull: false,
+    defaultValue: 0
   },
   vendor: {
-    type: DataTypes.SMALLINT
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+    type: DataTypes.SMALLINT,
+    allowNull: false,
   },
   lastLogin: {
     type: DataTypes.DATE,
@@ -114,7 +114,18 @@ User.init({
   },
   isDelete: {
     type: DataTypes.SMALLINT,
+    allowNull: false,
     defaultValue: 0
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
   }
 }, {
   // Other model options go here

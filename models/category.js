@@ -4,32 +4,28 @@ const { DataTypes, Model } = require('sequelize');
 const { postgresDb } = database
 const sequelize = postgresDb.getInstance();
 
-class Transaction extends Model {}
+class Category extends Model {}
 
-Transaction.init({
+Category.init({
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true
   },
-  userId: {
-    type: DataTypes.UUID,
+  parentId: {
+    type: DataTypes.UUID
   },
-  orderId: {
-    type: DataTypes.UUID,
+  title: {
+    type: DataTypes.STRING(75),
+    allowNull: false
   },
-  code: {
+  metaTitle: {
     type: DataTypes.STRING(100)
   },
-  type: {
-    type: DataTypes.SMALLINT
-  },
-  mode: {
-    type: DataTypes.SMALLINT
-  },
-  status: {
-    type: DataTypes.SMALLINT
+  slug: {
+    type: DataTypes.STRING(100),
+    // allowNull: false
   },
   content: {
     type: DataTypes.TEXT
@@ -51,8 +47,8 @@ Transaction.init({
   }
 }, {
   sequelize,
-  modelName: 'Transaction',
-  tableName: 'transaction',
+  modelName: 'Category',
+  tableName: 'category',
   timestamps: true,
   updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
@@ -63,4 +59,4 @@ Transaction.init({
 //   // Code here
 // })();
 
-module.exports = Transaction
+module.exports = Category
