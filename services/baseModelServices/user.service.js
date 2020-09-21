@@ -1,9 +1,9 @@
-const BaseService = require('./base');
-const userModel = require('./../models/user');
+const BaseService = require('./../base');
+const UserModel = require('./../../models/user');
 
 class UserService extends BaseService {
   constructor() {
-    super(userModel);
+    super(UserModel);
     this.getByEmail = this.getByEmail.bind(this);
   }
 

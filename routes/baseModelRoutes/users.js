@@ -1,7 +1,7 @@
 
-const routeConstants = require('./contants');
-const routeFactory = require('./routeFactory')
-const UserController = require('./../controllers/user');
+const routeConstants = require('../contants');
+const routeFactory = require('../routeFactory')
+const UserController = require('./../../controllers/baseModelControllers/user.controller');
 
 const { userRoutePaths, requestMethod } = routeConstants
 

@@ -1,5 +1,5 @@
-const UserService = require('./../../services/user');
-const BaseController = require('../base');
+const UserService = require('../../services/baseModelServices/user.service');
+const BaseController = require('./../base.controller');
 class UserController extends BaseController {
   constructor () {
     super(new UserService());

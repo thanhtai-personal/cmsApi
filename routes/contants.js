@@ -1,3 +1,5 @@
+const baseModelConstants = require('./baseModelRoutes/constant')
+
 const requestMethod = {
   get: 'GET',
   post: 'POST',
@@ -5,15 +7,8 @@ const requestMethod = {
   delete: 'DELETE'
 }
 
-const userRoutePaths = {
-  get: '/get/:id',
-  getByEmail: '/getByEmail',
-  createOrUpdate: '/createOrUpdate',
-  getAll: '/getAll',
-  // bulkCreate: '/bulkCreate' //no support this for user
-}
 
 module.exports = {
   requestMethod,
-  userRoutePaths
+  ...baseModelConstants
 }
