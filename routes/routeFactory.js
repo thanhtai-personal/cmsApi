@@ -16,16 +16,16 @@ module.exports = {
     routesList.forEach((routeObj) => {
       switch (routeObj.method) {
         case requestMethod.get:
-          router.get(routeObj.path, routeObj.controllerFunction)
+          router.get(`api/${routeObj.path}`, routeObj.controllerFunction)
           break;
         case requestMethod.post:
-          router.post(routeObj.path, routeObj.controllerFunction)
+          router.post(`api/${routeObj.path}`, routeObj.controllerFunction)
           break;
         case requestMethod.put:
-          router.put(routeObj.path, routeObj.controllerFunction)
+          router.put(`api/${routeObj.path}`, routeObj.controllerFunction)
           break;
         case requestMethod.delete:
-          router.delete(routeObj.path, routeObj.controllerFunction)
+          router.delete(`api/${routeObj.path}`, routeObj.controllerFunction)
           break;
       }
     })

@@ -7,8 +7,15 @@ const requestMethod = {
   delete: 'DELETE'
 }
 
+const authRoutePaths = {
+  login: '/login',
+  register: '/register',
+  getUser: '/getUser'
+}
+
 
 module.exports = {
   requestMethod,
+  authRoutePaths,
   ...baseModelConstants
 }
