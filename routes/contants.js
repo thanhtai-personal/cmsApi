@@ -10,7 +10,7 @@ const requestMethod = {
 const authRoutePaths = {
   login: '/login',
   register: '/register',
-  getUser: '/getUser'
+  getAuthData: '/get'
 }
 
 

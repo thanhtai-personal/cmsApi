@@ -95,7 +95,12 @@ User.init({
   admin: {
     type: DataTypes.SMALLINT,
     allowNull: false,
-    defaultValue: 0
+    defaultValue: 0,
+    set(value) {
+      let settedValue = 0;
+      if (value) settedValue = 1;
+      this.setDataValue('admin', settedValue);
+    }
   },
   vendor: {
     type: DataTypes.SMALLINT,

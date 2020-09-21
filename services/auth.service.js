@@ -1,6 +1,9 @@
+
+const passwordHash = require('password-hash');
+const jwt = require('jsonwebtoken');
+
 const BaseService = require('./base');
 const UserModel = require('./../models/user');
-const passwordHash = require('password-hash');
 const { secretKey, expiresIn } = require('./../middleWares/configAuthen.json');
 
 class AuthService extends BaseService {
@@ -9,39 +12,14 @@ class AuthService extends BaseService {
     this.models = {
       user: UserModel
     }
-    this.register = this.register.bind(this);
     this.login = this.login.bind(this);
-    this.getUserData = this.getUserData.bind(this);
+    this.getAuthData = this.getAuthData.bind(this);
   }
 
-  async register (data) {
+  async login (data, user) {
     try {
-      let user = await this.models.user.findByEmail(data.email)
-      if (!user) {
-        let user = await this.models.user.createOrUpdate(data)
-        return {
-          message: 'created user',
-          data: user
-        }
-      } else {
-        return {
-          message: 'user is existed',
-          data: {
-            email: user.email
-          }
-        }
-      }
-    } catch (error) {
-      console.log(`AuthService - register - failed`, error);
-      throw (error);
-    }
-  }
-
-  async login (data) {
-    try {
-      let user = await this.models.user.findByEmail(data.email);
       if (user) {
-        if (passwordHash.verify(user.password, data.password)) {
+        if (passwordHash.verify(data.password, user.passwordHash)) {
           let token = jwt.sign({
             email: user.email,
             id: user.id
@@ -66,9 +44,9 @@ class AuthService extends BaseService {
     }
   }
 
-  async getUserData (tokenData) {
+  async getAuthData (tokenData) {
     try {
-      let user = await models.User.findOne({
+      let user = await this.models.user.findOne({
         attributes: ['email', 'id'],
         where: { email: tokenData.email, isDelete: false },
         raw: true

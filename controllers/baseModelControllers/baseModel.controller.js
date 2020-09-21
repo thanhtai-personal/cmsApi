@@ -1,4 +1,4 @@
-const { v4: uuidv4, NIL: NIL_UUID } = require('uuid');
+const { NIL: NIL_UUID } = require('uuid');
 const BaseController = require('./../base.controller');
 
 class BaseModelController extends BaseController {

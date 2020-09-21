@@ -67,7 +67,7 @@ CREATE TABLE "user" (
   "lastName" varchar(50) DEFAULT NULL,
   "mobile" varchar(15) UNIQUE DEFAULT NULL,
   "email" varchar(50) UNIQUE DEFAULT NULL,
-  "passwordHash" varchar(32) NOT NULL,
+  "passwordHash" varchar(100) NOT NULL,
   "admin" smallint NOT NULL DEFAULT '0',
   "vendor" smallint NOT NULL DEFAULT '0',
   "createdAt" timestamp NOT NULL,

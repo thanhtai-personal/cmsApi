@@ -6,7 +6,7 @@ const AuthController = require('./../controllers/auth.controller');
 const { authRoutePaths, requestMethod } = routeConstants
 
 const authController = new AuthController();
-const userRoutes = [
+const authRoutes = [
   {
     path: authRoutePaths.login,
     controllerFunction: authController.login,
@@ -18,12 +18,12 @@ const userRoutes = [
     method: requestMethod.post,
     // isPublic: true
   }, {
-    path: authRoutePaths.getUser,
-    controllerFunction: authController.getUserData,
+    path: authRoutePaths.getAuthData,
+    controllerFunction: authController.getAuthData,
     method: requestMethod.get
   }
 ]
 
-const { generateMethod } = routeFactory
+const { generateMethod } = routeFactory;
 
-module.exports = generateMethod(userRoutes);
+module.exports = generateMethod(authRoutes);

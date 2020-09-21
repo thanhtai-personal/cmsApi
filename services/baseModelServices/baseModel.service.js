@@ -1,4 +1,5 @@
 const BaseService = require('../base');
+const { v4: uuidv4, NIL: NIL_UUID } = require('uuid');
 
 class BaseModelService extends BaseService {
   constructor (model, customContext = null) {
@@ -54,7 +55,7 @@ class BaseModelService extends BaseService {
       return result;
     } catch (error) {
       console.log(`service - ${this.model.constructor.name} - update failed!`, error);
-      return null;
+      throw error;
     }
   }
 
@@ -71,12 +72,19 @@ class BaseModelService extends BaseService {
 
   async createOrUpdate (data) {
     try {
-      const user = await this.getById(data.id);
-      if (!user) {
-        await this.create(data);
+      let model = null;
+      let result = null;
+      if (data.id) {
+        model = await this.getById(data.id);
       } else {
-        await this.update(data);
+        data.id = NIL_UUID;
       }
+      if (model) {
+        result = await this.update(data);
+      } else {
+        result = await this.create(data);
+      }
+      return result
     } catch (error) {
       console.log(`service - ${this.model.constructor.name} - create or update error`, error);
       throw(error);
