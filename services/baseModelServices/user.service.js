@@ -14,12 +14,12 @@ class UserService extends BaseService {
         email
       });
       if (!result) {
-        console.log('user not found by the email');
+        console.log('service - user - user not found by the email');
         return null;
       }
       return result;
     } catch (error) {
-      console.log('user not found by the email', error);
+      console.log('service - user - user not found by the email', error);
       return null;
     }
   }
