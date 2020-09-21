@@ -1,5 +1,6 @@
 const database = require('./../database');
 const { DataTypes, Model } = require('sequelize');
+const passwordHash = require('password-hash')
 
 const { postgresDb } = database
 const sequelize = postgresDb.getInstance();
@@ -84,11 +85,12 @@ User.init({
     type: DataTypes.STRING(32),
     allowNull: false,
     is: /^[0-9a-f]{64}$/i,
-    // set(value) {
-    //   // Storing passwords in plaintext in the database is terrible.
-    //   // Hashing the value with an appropriate cryptographic hash function is better.
-    //   this.setDataValue('passwordHash', hash(value));
-    // }
+    async set(value) {
+      // Storing passwords in plaintext in the database is terrible.
+      // Hashing the value with an appropriate cryptographic hash function is better.
+      const generatedPassword = await passwordHash.generate(value)
+      this.setDataValue('passwordHash', generatedPassword);
+    }
   },
   admin: {
     type: DataTypes.SMALLINT,
