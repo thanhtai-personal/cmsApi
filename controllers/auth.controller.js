@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const BaseController = require('./base.controller');
 const AuthService = require('./../services/auth.service');
 const UserService = require('./../services/baseModelServices/user.service');
@@ -36,9 +38,8 @@ class AuthController extends BaseController {
 
   async getAuthData (req, res, next) {
     try {
-      let decodedTokenData = jwt.verify(req.headers['x-access-token'], secretKey);
-      let user = await this.service.getAuthData(decodedTokenData)
-      if (_.isNil(user)) {
+      let user = await this.service.getAuthData(req.authData)
+      if (!user) {
         return res.send({error: createError(404), data: { message: 'no user found'}})
       }
       return res.json(this.bindSuccessDataResponse(user))

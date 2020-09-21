@@ -77,7 +77,7 @@ class BaseModelService extends BaseService {
       if (data.id) {
         model = await this.getById(data.id);
       } else {
-        data.id = NIL_UUID;
+        data.id = uuidv4();
       }
       if (model) {
         result = await this.update(data);

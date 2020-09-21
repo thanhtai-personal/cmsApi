@@ -105,6 +105,12 @@ User.init({
   vendor: {
     type: DataTypes.SMALLINT,
     allowNull: false,
+    defaultValue: 0,
+    set(value) {
+      let settedValue = 0;
+      if (value) settedValue = 1;
+      this.setDataValue('admin', settedValue);
+    }
   },
   lastLogin: {
     type: DataTypes.DATE,
@@ -122,7 +128,12 @@ User.init({
   isDelete: {
     type: DataTypes.SMALLINT,
     allowNull: false,
-    defaultValue: 0
+    defaultValue: 0,
+    set(value) {
+      let settedValue = 0;
+      if (value) settedValue = 1;
+      this.setDataValue('admin', settedValue);
+    }
   },
   createdAt: {
     type: DataTypes.DATE,

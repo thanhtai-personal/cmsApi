@@ -48,7 +48,7 @@ class AuthService extends BaseService {
     try {
       let user = await this.models.user.findOne({
         attributes: ['email', 'id'],
-        where: { email: tokenData.email, isDelete: false },
+        where: { email: tokenData.email, isDelete: 0 },
         raw: true
       });
       if (user) return user
