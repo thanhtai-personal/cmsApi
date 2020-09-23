@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=production&& node ./bin/www",
-    "dev": "set PORT=3056&& nodemon ./bin/www",
-    "mac:dev": "PORT=3056 nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "mac:dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -109,7 +109,7 @@ User.init({
     set(value) {
       let settedValue = 0;
       if (value) settedValue = 1;
-      this.setDataValue('admin', settedValue);
+      this.setDataValue('vendor', settedValue);
     }
   },
   lastLogin: {

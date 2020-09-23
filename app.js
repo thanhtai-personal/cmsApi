@@ -14,8 +14,8 @@ const { produceRoute } = routeFactory
 
 var app = appSingleton.getInstance();
 
-app.use(cors())
-app.use(checkAuthenticate)
+app.use(cors());
+app.use(checkAuthenticate);
 
 app.use(logger('dev'));
 app.use(express.json());
