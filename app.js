@@ -14,13 +14,14 @@ const { produceRoute } = routeFactory
 
 var app = appSingleton.getInstance();
 
-app.use(cors());
-app.use(checkAuthenticate);
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(cors());
+app.use(checkAuthenticate);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 routes.forEach((routeData) => {
