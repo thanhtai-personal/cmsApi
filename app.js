@@ -9,7 +9,6 @@ const routes = require('./routes');
 
 const routeFactory = require('./routes/routeFactory');
 const appSingleton = require('./appSingleton');
-const googleAuth = require('./googleAuthen');
 
 const { produceRoute } = routeFactory
 
@@ -28,6 +27,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 routes.forEach((routeData) => {
   produceRoute(routeData)
 })
-googleAuth()
 
 module.exports = app;

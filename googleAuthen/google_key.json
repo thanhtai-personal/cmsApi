@@ -11,6 +11,10 @@
       ],
       "javascript_origins": [
         "http://localhost:3000"
+      ],
+      "scopes": [
+        "https://www.googleapis.com/auth/youtube.readonly",
+        "https://www.googleapis.com/auth/gmail.readonly"
       ]
     }
   }
