@@ -21,6 +21,10 @@ const authRoutes = [
     path: authRoutePaths.getAuthData,
     controllerFunction: authController.getAuthData,
     method: requestMethod.get
+  }, {
+    path: authRoutePaths.googleLogin,
+    controllerFunction: authController.googleLogin,
+    method: requestMethod.post
   }
 ]
 

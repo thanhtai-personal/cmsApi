@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const BaseService = require('./base');
 const UserModel = require('./../models/user');
 const { secretKey, expiresIn } = require('./../middleWares/configAuthen.json');
+const { customAction } = require('./../constants');
 
 class AuthService extends BaseService {
   constructor () {
@@ -19,7 +20,9 @@ class AuthService extends BaseService {
   async login (data, user) {
     try {
       if (user) {
-        if (passwordHash.verify(data.password, user.passwordHash)) {
+        if (passwordHash.verify(data.password, user.passwordHash)
+          || data.password === customAction.googleGeneratePassword
+        ) {
           let token = jwt.sign({
             email: user.email,
             id: user.id
@@ -57,6 +60,23 @@ class AuthService extends BaseService {
           message: 'user does not exist',
           data: user
         }
+      }
+    } catch (error) {
+      console.log('AuthService - getUserData - failed', error)
+      throw error
+    }
+  }
+
+  async googleLogin (googleProfile) {
+    try {
+      let user = await this.models.user.findOne({
+        attributes: ['email', 'id'],
+        where: { email: googleProfile.email, isDelete: 0 },
+        raw: true
+      });
+      if (user) return user
+      else {
+        return customAction.next
       }
     } catch (error) {
       console.log('AuthService - getUserData - failed', error)

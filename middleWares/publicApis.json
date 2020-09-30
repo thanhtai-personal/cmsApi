@@ -1,6 +1,7 @@
 {
   "publicAPIs": [
     "/auth/login",
-    "/auth/register"
+    "/auth/register",
+    "/auth/google"
   ]
 }

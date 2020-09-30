@@ -10,7 +10,8 @@ const requestMethod = {
 const authRoutePaths = {
   login: '/login',
   register: '/register',
-  getAuthData: '/get'
+  getAuthData: '/get',
+  googleLogin: '/google',
 }
 
 
