@@ -3,7 +3,9 @@ SET NAMES 'utf8';
 
 ALTER TABLE IF EXISTS "role_permission" DROP CONSTRAINT IF EXISTS "fk_role_permission_role";
 ALTER TABLE IF EXISTS "role_permission" DROP CONSTRAINT IF EXISTS "fk_role_permission_permission";
-ALTER TABLE IF EXISTS "user" DROP CONSTRAINT IF EXISTS "fk_user_role";
+ALTER TABLE IF EXISTS "account" DROP CONSTRAINT IF EXISTS "fk_account_role";
+ALTER TABLE IF EXISTS "account" DROP CONSTRAINT IF EXISTS "fk_account_user";
+ALTER TABLE IF EXISTS "account" DROP CONSTRAINT IF EXISTS "fk_account_profile_image";
 ALTER TABLE IF EXISTS "cart" DROP CONSTRAINT IF EXISTS "fk_cart_user";
 ALTER TABLE IF EXISTS "product" DROP CONSTRAINT IF EXISTS "fk_product_user";
 ALTER TABLE IF EXISTS "cart_item" DROP CONSTRAINT IF EXISTS "fk_cart_item_cart";
@@ -65,21 +67,52 @@ CREATE TABLE "user" (
   "firstName" varchar(50) DEFAULT NULL,
   "middleName" varchar(50) DEFAULT NULL,
   "lastName" varchar(50) DEFAULT NULL,
+  "fullName" varchar(150) DEFAULT NULL,
+  "createdAt" timestamp NOT NULL,
+  "updatedAt" timestamp NOT NULL,
+  "intro" text,
+  "profile" text,
+  "isDelete" smallint NOT NULL DEFAULT '0',
+  PRIMARY KEY ("id")
+);
+
+DROP TABLE IF EXISTS "image";
+CREATE TABLE "image" (
+  "id" uuid,
+  "name" varchar(100),
+  "description" text,
+  "src" text NOT NULL,
+  "createdAt" timestamp NOT NULL,
+  "updatedAt" timestamp NOT NULL,
+  "isDelete" smallint NOT NULL DEFAULT '0',
+  PRIMARY KEY ("id")
+);
+
+
+DROP TABLE IF EXISTS "account";
+CREATE TABLE "account" (
+  "id" uuid,
+  "accountType" varchar(20) NOT NULL DEFAULT 'TTTGalaxy',
+  "accountToken" text,
   "mobile" varchar(15) UNIQUE DEFAULT NULL,
-  "email" varchar(50) UNIQUE DEFAULT NULL,
+  "email" varchar(50) UNIQUE NOT NULL,
+  "userName" varchar(50),
   "passwordHash" varchar(100) NOT NULL,
   "admin" smallint NOT NULL DEFAULT '0',
-  "vendor" smallint NOT NULL DEFAULT '0',
   "createdAt" timestamp NOT NULL,
   "updatedAt" timestamp NOT NULL,
   "lastLogin" timestamp DEFAULT NULL,
-  "intro" text,
-  "profile" text,
+  "userId" uuid,
   "role" uuid,
+  "profileImage" uuid,
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
-  CONSTRAINT "fk_user_role" FOREIGN KEY ("role") REFERENCES "role" ("id")
+  CONSTRAINT "fk_account_role" FOREIGN KEY ("role") REFERENCES "role" ("id"),
+  CONSTRAINT "fk_account_user" FOREIGN KEY ("userId") REFERENCES "user" ("id"),
+  CONSTRAINT "fk_account_profile_image" FOREIGN KEY ("profileImage") REFERENCES "image" ("id")
 );
+
+
 
 
 DROP TABLE IF EXISTS "cart";
