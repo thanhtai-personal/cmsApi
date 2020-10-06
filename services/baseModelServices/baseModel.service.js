@@ -14,6 +14,7 @@ class BaseModelService extends BaseService {
     this.createOrUpdate = this.createOrUpdate.bind(this);
     this.delete = this.delete.bind(this);
     this.bulkCreate = this.bulkCreate.bind(this);
+    this.logger.log = this.logger.log.bind(this)
   }
 
   async getById (id) {
@@ -25,12 +26,12 @@ class BaseModelService extends BaseService {
         }
       });
       if (!result) {
-        console.log(`service - ${this.model.constructor.name} - getById not found!`);
+        this.logger.log(`${this.model.constructor.name} - getById`, 'not found');
         return null;
       }
       return result;
     } catch (error) {
-      console.log(`service - ${this.model.constructor.name} - getById failed!`, error);
+      this.logger.log(`service - ${this.model.constructor.name} - getById failed!`, error);
       throw(error);
     }
   }
@@ -39,10 +40,10 @@ class BaseModelService extends BaseService {
     if(!this.model) return null;
     try {
       const result = await this.model.create(data)
-      console.log(`service - ${this.model.constructor.name} - created successful!`);
+      this.logger.log(`service - ${this.model.constructor.name}`, `created successful!`);
       return result;
     } catch (error) {
-      console.log(`service - ${this.model.constructor.name} - create failed!`, error);
+      this.logger.log(`service - ${this.model.constructor.name} - create failed!`, error);
       throw(error);
     }
   }
@@ -51,10 +52,10 @@ class BaseModelService extends BaseService {
     if(!this.model) return null;
     try {
       const result = await this.model.update(data);
-      console.log(`service - ${this.model.constructor.name} - updated successful!`);
+      this.logger.log(`service - ${this.model.constructor.name}`, `updated successful!`);
       return result;
     } catch (error) {
-      console.log(`service - ${this.model.constructor.name} - update failed!`, error);
+      this.logger.log(`service - ${this.model.constructor.name} - update failed!`, error);
       throw error;
     }
   }
@@ -65,7 +66,7 @@ class BaseModelService extends BaseService {
       const result = await this.model.findAll(queryData);
       return result;
     } catch (error) {
-      console.log(`service - ${this.model.constructor.name} - query failed!`, error);
+      this.logger.log(`service - ${this.model.constructor.name} - query failed!`, error);
       throw(error);
     }
   }
@@ -86,7 +87,7 @@ class BaseModelService extends BaseService {
       }
       return result
     } catch (error) {
-      console.log(`service - ${this.model.constructor.name} - create or update error`, error);
+      this.logger.log(`service - ${this.model.constructor.name} - create or update error`, error);
       throw(error);
     }
   }
@@ -96,9 +97,9 @@ class BaseModelService extends BaseService {
     // if(!this.model) return
     // try {
     //   await this.model.destroy(queryData);
-    //   console.log(`service - ${this.model.constructor.name} - deleted success!`, error);
+    //   this.logger.log(`service - ${this.model.constructor.name} - deleted success!`, error);
     // } catch (error) {
-    //   console.log(`service - ${this.model.constructor.name} - delete failed!`, error);
+    //   this.logger.log(`service - ${this.model.constructor.name} - delete failed!`, error);
     //   throw(error);
     // }
   }
@@ -108,9 +109,9 @@ class BaseModelService extends BaseService {
       if(!this.model) return;
       try {
         await this.model.bulkCreate(dataList);
-        console.log(`service - ${this.model.constructor.name} - bulkCreated successful!`);
+        this.logger.log(`service - ${this.model.constructor.name}`, `bulkCreated successful!`);
       } catch (error) {
-        console.log(`service - ${this.model.constructor.name} - bulkCreate failed!`, error);
+        this.logger.log(`service - ${this.model.constructor.name} - bulkCreate failed!`, error);
         throw(error);
       }
     }

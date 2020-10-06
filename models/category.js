@@ -50,7 +50,6 @@ Category.init({
   modelName: 'Category',
   tableName: 'category',
   timestamps: true,
-  updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
 
 // code first style

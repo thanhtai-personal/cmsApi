@@ -3,7 +3,7 @@ const passwordHash = require('password-hash');
 const jwt = require('jsonwebtoken');
 
 const BaseService = require('./base');
-const UserModel = require('./../models/user');
+const AccountModel = require('./../models/account');
 const { secretKey, expiresIn } = require('./../middleWares/configAuthen.json');
 const { customAction } = require('./../constants');
 
@@ -11,21 +11,22 @@ class AuthService extends BaseService {
   constructor () {
     super();
     this.models = {
-      user: UserModel
+      account: AccountModel
     }
     this.login = this.login.bind(this);
     this.getAuthData = this.getAuthData.bind(this);
+    this.logger.log = this.logger.log.bind(this)
   }
 
-  async login (data, user) {
+  async login (data, account) {
     try {
-      if (user) {
-        if (passwordHash.verify(data.password, user.passwordHash)
-          || data.password === customAction.googleGeneratePassword
+      if (account) {
+        if (passwordHash.verify(data.password, account.passwordHash)
+          || data.password === customAction.socialGeneratePassword
         ) {
           let token = jwt.sign({
-            email: user.email,
-            id: user.id
+            email: account.email,
+            id: account.id
           }, secretKey, { expiresIn });
           return {
             message: 'Login success!',
@@ -42,44 +43,44 @@ class AuthService extends BaseService {
         }
       }
     } catch (error) {
-      console.log(`AuthService - login - failed`, error);
+      this.logger.log('login', error);
       throw (error);
     }
   }
 
   async getAuthData (tokenData) {
     try {
-      let user = await this.models.user.findOne({
+      let account = await this.models.account.findOne({
         attributes: ['email', 'id'],
         where: { email: tokenData.email, isDelete: 0 },
         raw: true
       });
-      if (user) return user
+      if (account) return account
       else {
         return {
-          message: 'user does not exist',
-          data: user
+          message: 'account does not exist',
+          data: account
         }
       }
     } catch (error) {
-      console.log('AuthService - getUserData - failed', error)
+      this.logger.log('getAuthData', error)
       throw error
     }
   }
 
-  async googleLogin (googleProfile) {
+  async socialLogin (profile) {
     try {
-      let user = await this.models.user.findOne({
+      let account = await this.models.account.findOne({
         attributes: ['email', 'id'],
-        where: { email: googleProfile.email, isDelete: 0 },
+        where: { email: profile.email, isDelete: 0 },
         raw: true
       });
-      if (user) return user
+      if (account) return account
       else {
         return customAction.next
       }
     } catch (error) {
-      console.log('AuthService - getUserData - failed', error)
+      this.logger.log('socialLogin', error)
       throw error
     }
   }

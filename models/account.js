@@ -133,7 +133,6 @@ Account.init({
   // freezeTableName: true,
   timestamps: true,
   // createdAt: false, // I don't want createdAt
-  // updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
 
 // code first style

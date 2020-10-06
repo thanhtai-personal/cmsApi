@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "generate-password": "^1.5.1",
     "google-auth-library": "^6.1.0",
     "googleapis": "^60.0.1",
     "http-errors": "^1.8.0",

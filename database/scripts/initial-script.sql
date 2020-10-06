@@ -26,10 +26,10 @@ ALTER TABLE IF EXISTS "transaction" DROP CONSTRAINT IF EXISTS "fk_transaction_us
 DROP TABLE IF EXISTS "role";
 CREATE TABLE "role" (
   "id" uuid,
-  "title" text,
+  "title" text UNIQUE NOT NULL,
   "description" text,
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id")
 );
@@ -40,8 +40,8 @@ CREATE TABLE "permission" (
   "id" uuid NOT NULL,
   "title" text NOT NULL,
   "description" text,
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id")
 );
@@ -52,8 +52,8 @@ CREATE TABLE "role_permission" (
   "id" uuid,
   "roleId" uuid NOT NULL,
   "permissionId" uuid NOT NULL,
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
   CONSTRAINT "fk_role_permission_role" FOREIGN KEY ("roleId") REFERENCES "role" ("id"),
@@ -68,8 +68,8 @@ CREATE TABLE "user" (
   "middleName" varchar(50) DEFAULT NULL,
   "lastName" varchar(50) DEFAULT NULL,
   "fullName" varchar(150) DEFAULT NULL,
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "intro" text,
   "profile" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
@@ -82,8 +82,8 @@ CREATE TABLE "image" (
   "name" varchar(100),
   "description" text,
   "src" text NOT NULL,
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id")
 );
@@ -99,8 +99,8 @@ CREATE TABLE "account" (
   "userName" varchar(50),
   "passwordHash" varchar(100) NOT NULL,
   "admin" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "lastLogin" timestamp DEFAULT NULL,
   "userId" uuid,
   "role" uuid,
@@ -120,8 +120,8 @@ CREATE TABLE "cart" (
   "id" uuid,
   "userId" uuid DEFAULT NULL,
   "content" text,
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
   CONSTRAINT "fk_cart_user" FOREIGN KEY ("userId") REFERENCES "user" ("id")
@@ -142,8 +142,8 @@ CREATE TABLE "product" (
   "discount" float NOT NULL DEFAULT '0',
   "quantity" smallint NOT NULL DEFAULT '0',
   "shop" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "publishedAt" timestamp DEFAULT NULL,
   "startAt" timestamp DEFAULT NULL,
   "endAt" timestamp DEFAULT NULL,
@@ -164,8 +164,8 @@ CREATE TABLE "cart_item" (
   "discount" float NOT NULL DEFAULT '0',
   "quantity" smallint NOT NULL DEFAULT '0',
   "active" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
@@ -184,8 +184,8 @@ CREATE TABLE "category" (
   "slug" varchar(100) NOT NULL,
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   PRIMARY KEY ("id"),
   CONSTRAINT "fk_category_parent" FOREIGN KEY ("parentId") REFERENCES "category" ("id")
 );
@@ -206,8 +206,8 @@ CREATE TABLE "order" (
   "promo" varchar(50) DEFAULT NULL,
   "discount" float NOT NULL DEFAULT '0',
   "grandTotal" float NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "note" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
@@ -224,8 +224,8 @@ CREATE TABLE "order_item" (
   "price" float NOT NULL DEFAULT '0',
   "discount" float NOT NULL DEFAULT '0',
   "quantity" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
@@ -239,8 +239,8 @@ CREATE TABLE "product_category" (
   "productId" uuid NOT NULL,
   "categoryId" uuid NOT NULL,
   "isDelete" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   PRIMARY KEY ("productId","categoryId"),
   CONSTRAINT "fk_pc_category" FOREIGN KEY ("categoryId") REFERENCES "category" ("id"),
   CONSTRAINT "fk_pc_product" FOREIGN KEY ("productId") REFERENCES "product" ("id")
@@ -254,8 +254,8 @@ CREATE TABLE "product_meta" (
   "key" varchar(50) NOT NULL,
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   PRIMARY KEY ("id"),
   CONSTRAINT "fk_meta_product" FOREIGN KEY ("productId") REFERENCES "product" ("id")
 );
@@ -269,8 +269,8 @@ CREATE TABLE "product_review" (
   "title" varchar(100) NOT NULL,
   "rating" smallint NOT NULL DEFAULT '0',
   "published" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "publishedAt" timestamp DEFAULT NULL,
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
@@ -289,8 +289,8 @@ CREATE TABLE "tag" (
   "slug" varchar(100) NOT NULL,
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   PRIMARY KEY ("id")
 );
 
@@ -300,8 +300,8 @@ CREATE TABLE "product_tag" (
   "productId" uuid NOT NULL,
   "tagId" uuid NOT NULL,
   "isDelete" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   PRIMARY KEY ("productId","tagId"),
   CONSTRAINT "fk_pt_product" FOREIGN KEY ("productId") REFERENCES "product" ("id"),
   CONSTRAINT "fk_pt_tag" FOREIGN KEY ("tagId") REFERENCES "tag" ("id")
@@ -318,8 +318,8 @@ CREATE TABLE "transaction" (
   "type" smallint NOT NULL DEFAULT '0',
   "mode" smallint NOT NULL DEFAULT '0',
   "status" smallint NOT NULL DEFAULT '0',
-  "createdAt" timestamp NOT NULL,
-  "updatedAt" timestamp NOT NULL,
+  "createdAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
+  "updatedAt" timestamptz NOT NULL DEFAULT (NOW() at time zone 'utc'),
   "content" text,
   "isDelete" smallint NOT NULL DEFAULT '0',
   PRIMARY KEY ("id"),
@@ -327,4 +327,29 @@ CREATE TABLE "transaction" (
   CONSTRAINT "fk_transaction_user" FOREIGN KEY ("userId") REFERENCES "user" ("id")
 );
 
---from https://github.com/tutorials24x7/shopping-cart-database-mysql/blob/master/shop.sql
+CREATE OR REPLACE FUNCTION trigger_set_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updatedAt = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_timestamp_account BEFORE UPDATE ON "account" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_cart BEFORE UPDATE ON "cart" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_cart_item BEFORE UPDATE ON "cart_item" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_category BEFORE UPDATE ON "category" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_image BEFORE UPDATE ON "image" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_order BEFORE UPDATE ON "order" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_order_item BEFORE UPDATE ON "order_item" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_permission BEFORE UPDATE ON "permission" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_product BEFORE UPDATE ON "product" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_product_category BEFORE UPDATE ON "product_category" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_product_meta BEFORE UPDATE ON "product_meta" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_product_review BEFORE UPDATE ON "product_review" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_product_tag BEFORE UPDATE ON "product_tag" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_role BEFORE UPDATE ON "role" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_role_permission BEFORE UPDATE ON "role_permission" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_tag BEFORE UPDATE ON "tag" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_transaction BEFORE UPDATE ON "transaction" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+CREATE TRIGGER set_timestamp_user BEFORE UPDATE ON "user" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();

@@ -39,7 +39,6 @@ Cart.init({
   modelName: 'Cart',
   tableName: 'cart',
   timestamps: true,
-  updatedAt: 'updateTimestamp' // I want updatedAt to actually be called updateTimestamp
 });
 
 // code first style

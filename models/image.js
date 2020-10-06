@@ -4,25 +4,24 @@ const { DataTypes, Model } = require('sequelize');
 const { postgresDb } = database
 const sequelize = postgresDb.getInstance();
 
-class ProductMeta extends Model {}
+class Image extends Model {}
 
-ProductMeta.init({
+Image.init({
   // Model attributes are defined here
   id: {
     type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true
   },
-  productId: {
-    type: DataTypes.UUID,
-    allowNull: false
+  name: {
+    type: DataTypes.STRING
   },
-  key: {
-    type: DataTypes.STRING(50),
-    allowNull: false
-  },
-  content: {
+  description: {
     type: DataTypes.TEXT
+  },
+  src: {
+    type: DataTypes.TEXT,
+    allowNull: false
   },
   isDelete: {
     type: DataTypes.SMALLINT,
@@ -41,8 +40,8 @@ ProductMeta.init({
   }
 }, {
   sequelize,
-  modelName: 'ProductMeta',
-  tableName: 'product_meta',
+  modelName: 'Image',
+  tableName: 'image',
   timestamps: true,
 });
 
@@ -52,4 +51,4 @@ ProductMeta.init({
 //   // Code here
 // })();
 
-module.exports = ProductMeta
+module.exports = Image
