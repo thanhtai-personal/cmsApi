@@ -75,7 +75,7 @@ class AuthService extends BaseService {
         where: { email: profile.email, isDelete: 0 },
         raw: true
       });
-      if (account) return account
+      if (account) return account.id
       else {
         return customAction.next
       }

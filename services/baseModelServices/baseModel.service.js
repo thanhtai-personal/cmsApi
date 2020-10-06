@@ -51,7 +51,10 @@ class BaseModelService extends BaseService {
   async update (data) {
     if(!this.model) return null;
     try {
-      const result = await this.model.update(data);
+      const result = await this.model.update(
+        data,
+        { returning: true, where: { id: data.id } }
+      );
       this.logger.log(`service - ${this.model.constructor.name}`, `updated successful!`);
       return result;
     } catch (error) {

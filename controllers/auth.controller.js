@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const uuid = require('uuid');
 
 const BaseController = require('./base.controller');
 const AuthService = require('./../services/auth.service');
@@ -44,7 +44,7 @@ class AuthController extends BaseController {
         description: "guess"
       })
     }
-    return role
+    return role.id
   }
 
   async register (req, res, next) {
@@ -56,10 +56,10 @@ class AuthController extends BaseController {
         data.userId = user.id;
       }
       if (!data.role) {
-        data.role = this.createGuess().id;
+        data.role = await this.createGuess();
       }
       if (data.image) {
-        let image = this.imageService.createOrUpdate({
+        let image = await this.imageService.createOrUpdate({
           name: "profileImage",
           description: "profile image",
           src: data.image
@@ -83,7 +83,14 @@ class AuthController extends BaseController {
       if (!account) {
         return res.send({error: createError(404), data: { message: 'no account found'}})
       }
-      return res.json(this.bindSuccessDataResponse(account))
+      let user = await this.userService.getById(account.userId);
+      let resultData = {
+        ...user,
+        ...account
+      }
+      delete resultData.password
+      delete resultData.passwordHash
+      return res.json(this.bindSuccessDataResponse(resultData))
     } catch (error) {
       next(error);
     }
@@ -91,84 +98,40 @@ class AuthController extends BaseController {
 
   async googleLogin (req, res, next) {
     try {
-      let account = await this.service.socialLogin(req.body)
-      if (!account) {
+      let nextAction = await this.service.socialLogin(req.body)
+      if (!nextAction) {
         return res.send({error: createError(404), data: { message: 'no account found'}})
       }
-      if (account === customAction.next) {
-        let data = {
-          ...req.body
-        }
-        if (!data.userId) {
-          let user = await this.userService.createOrUpdate(data);
-          data.userId = user.id;
-        }
-        if (!data.role) {
-          data.role = this.createGuess().id;
-        }
-        if (data.image) {
-          let image = this.imageService.createOrUpdate({
-            name: "profileImage",
-            description: "profile image",
-            src: data.image
-          })
-          data.profileImage = image.id
-        }
-        data.accountType = accountTypes.google
-        data.passwordHash = generatorPassword.generate({
-          length: 9,
-          numbers: true,
-          lowercase: true,
-          uppercase: true,
-          excludeSimilarCharacters: true,
-        });
-        account = await this.accountService.createOrUpdate(data);
+      let data = {
+        ...req.body
       }
-      let resultData = await this.service.login({
-        email: req.body.email,
-        password: customAction.socialGeneratePassword
-      }, account);
-      return res.json(this.bindSuccessDataResponse(resultData))
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async facebookLogin (req, res, next) {
-    try {
-      let account = await this.service.socialLogin(req.body)
-      if (!account) {
-        return res.send({error: createError(404), data: { message: 'no account found'}})
+      if (!data.userId) {
+        let user = await this.userService.createOrUpdate(data);
+        data.userId = user.id;
       }
-      if (account === customAction.next) {
-        let data = {
-          ...req.body
-        }
-        if (!data.userId) {
-          let user = await this.userService.createOrUpdate(data);
-          data.userId = user.id;
-        }
-        if (!data.role) {
-          data.role = this.createGuess().id;
-        }
-        if (data.image) {
-          let image = this.imageService.createOrUpdate({
-            name: "profileImage",
-            description: "profile image",
-            src: data.image
-          })
-          data.profileImage = image.id
-        }
-        data.accountType = accountTypes.facebook
-        data.passwordHash = generatorPassword.generate({
-          length: 9,
-          numbers: true,
-          lowercase: true,
-          uppercase: true,
-          excludeSimilarCharacters: true,
-        });
-        account = await this.accountService.createOrUpdate(data);
+      if (!data.role) {
+        data.role = await this.createGuess();
       }
+      if (data.image) {
+        let image = await this.imageService.createOrUpdate({
+          name: "profileImage",
+          description: "profile image",
+          src: data.image
+        })
+        data.profileImage = image.id
+      }
+      data.accountType = data.googleId ? accountTypes.google : data.facebookId ? accountTypes.facebook : null
+      data.passwordHash = generatorPassword.generate({
+        length: 16,
+        numbers: true,
+        lowercase: true,
+        uppercase: true,
+        excludeSimilarCharacters: true,
+      });
+      if (uuid.validate(nextAction)) {
+        data.id = nextAction
+      }
+      let account = await this.accountService.createOrUpdate(data);
       let resultData = await this.service.login({
         email: req.body.email,
         password: customAction.socialGeneratePassword

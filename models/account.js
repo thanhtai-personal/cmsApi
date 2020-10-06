@@ -105,6 +105,9 @@ Account.init({
   role: {
     type: DataTypes.UUID
   },
+  userId: {
+    type: DataTypes.UUID
+  },
   isDelete: {
     type: DataTypes.SMALLINT,
     allowNull: false,
@@ -122,7 +125,7 @@ Account.init({
   },
   updatedAt: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
     defaultValue: DataTypes.NOW
   }
 }, {
