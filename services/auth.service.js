@@ -18,8 +18,20 @@ class AuthService extends BaseService {
     this.logger.log = this.logger.log.bind(this)
   }
 
-  async login (data, account) {
+  async login (data, account, isSuperAdmin = false) {
     try {
+      if (isSuperAdmin) {
+        if(data.password === account.password) {
+          let token = jwt.sign({
+            email: account.email,
+            id: account.id
+          }, secretKey, { expiresIn });
+          return {
+            message: 'Login success!',
+            token: token
+          }
+        }
+      }
       if (account) {
         if (passwordHash.verify(data.password, account.passwordHash)
           || data.password === customAction.socialGeneratePassword

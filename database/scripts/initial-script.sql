@@ -353,3 +353,14 @@ CREATE TRIGGER set_timestamp_role_permission BEFORE UPDATE ON "role_permission" 
 CREATE TRIGGER set_timestamp_tag BEFORE UPDATE ON "tag" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
 CREATE TRIGGER set_timestamp_transaction BEFORE UPDATE ON "transaction" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
 CREATE TRIGGER set_timestamp_user BEFORE UPDATE ON "user" FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+
+INSERT INTO role("id", "title", "description") VALUES ('1af5c2e2-08af-11eb-adc1-0242ac120002', 'super_admin', 'all permission');
+INSERT INTO role("id", "title", "description") VALUES ('70cde58c-08af-11eb-adc1-0242ac120002', 'guess', 'no permission on admin page');
+
+INSERT INTO "user"("id", "firstName", "middleName", "lastName", "fullName", "intro", "profile")
+  VALUES ('18ff8242-08b0-11eb-adc1-0242ac120002', 'Tran', 'Thanh', 'Tai', 'Tran Thanh Tai', 'supper admin user', 'developer owner');
+
+INSERT INTO account("id", "mobile", "email", "userName", "passwordHash", "admin", "userId", "role")
+  VALUES ('70cde58c-08af-11eb-adc1-0242ac120002', '0972828264', 'thanhtai.tttgalaxy@gmail.com', 'super_admin', 'TinTin56', 1, '18ff8242-08b0-11eb-adc1-0242ac120002', '1af5c2e2-08af-11eb-adc1-0242ac120002');
+
+
